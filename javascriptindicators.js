@@ -1,6 +1,4 @@
-
-
-  const data = {
+const data = {
   "Indicators_available": [
     {
   "CODE": "AV_1_1",
