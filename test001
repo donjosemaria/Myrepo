@@ -1,0 +1,114 @@
+<div id="indicator-search" style="font-family: 'Outfit', sans-serif;padding: 20px;max-width: 800px;margin: auto">
+  <h2 style="color: #32673f">Find Indicators</h2>
+  <div style="margin-bottom: 15px">
+    Main Dimension:
+    
+      Select a Main Dimension
+    
+  </div>
+  <div style="margin-bottom: 15px">
+    Category:
+    
+      Select a Category
+    
+  </div>
+  Search Indicators
+  <div id="results" style="margin-top: 20px"></div>
+</div>
+<script>
+const data = {
+  "Indicators_available": [
+    {
+      "CODE": "AV_1_1",
+      "ID": "ACCESCOOKINGFUEL",
+      "NAME": "Access to clean fuels and technologies for cooking, total",
+      "DESCRIPTION": "Proportion of total population primarily using clean cooking fuels and technologies for cooking.",
+      "UNIT": "% of population ",
+      "SOURCE": "World Bank",
+      "LINK": "https://data.worldbank.org/indicator/EG.CFT.ACCS.ZS",
+      "MAIN DIMENSION": "Energy",
+      "CATEGORY": "Energy consumption"
+    },
+    // Agrega aquí el resto de los indicadores
+  ]
+};
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () =&gt; {
+  const mainDimensionSelect = document.getElementById('main-dimension');
+  const categorySelect = document.getElementById('category');
+  const resultsDiv = document.getElementById('results');
+
+  let mainDimensions = {};
+
+  // Accedemos al array dentro de "Indicators_available"
+  const indicators = data.Indicators_available;
+
+  // Agrupar categorías por "MAIN DIMENSION"
+  indicators.forEach(item =&gt; {
+    if (!mainDimensions[item['MAIN DIMENSION']]) {
+      mainDimensions[item['MAIN DIMENSION']] = new Set();
+    }
+    if (item['CATEGORY']) {
+      mainDimensions[item['MAIN DIMENSION']].add(item['CATEGORY']);
+    }
+  });
+
+  // Poblar el desplegable de "Main Dimension"
+  Object.keys(mainDimensions).forEach(dimension =&gt; {
+    const option = document.createElement('option');
+    option.value = dimension;
+    option.textContent = dimension;
+    mainDimensionSelect.appendChild(option);
+  });
+
+  // Actualizar categorías al seleccionar una Main Dimension
+  mainDimensionSelect.addEventListener('change', () =&gt; {
+    const selectedDimension = mainDimensionSelect.value;
+    categorySelect.innerHTML = 'Select a Category';
+    categorySelect.disabled = !selectedDimension;
+
+    if (selectedDimension &amp;&amp; mainDimensions[selectedDimension]) {
+      mainDimensions[selectedDimension].forEach(category =&gt; {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        categorySelect.appendChild(option);
+      });
+    }
+  });
+
+  // Buscar y mostrar resultados
+  document.getElementById('search-button').addEventListener('click', () =&gt; {
+    const selectedDimension = mainDimensionSelect.value;
+    const selectedCategory = categorySelect.value;
+
+    // Filtrar resultados
+    const filteredData = indicators.filter(item =&gt;
+      (!selectedDimension || item['MAIN DIMENSION'] === selectedDimension) &amp;&amp;
+      (!selectedCategory || item['CATEGORY'] === selectedCategory)
+    );
+
+    // Mostrar resultados
+    resultsDiv.innerHTML = '';
+    if (filteredData.length &gt; 0) {
+      filteredData.forEach(item =&gt; {
+        const resultItem = document.createElement('div');
+        resultItem.style.border = '1px solid #ccc';
+        resultItem.style.padding = '10px';
+        resultItem.style.marginBottom = '10px';
+
+        resultItem.innerHTML = `
+          <h3 style="color: #32673f">${item['NAME']}</h3>
+          <p>${item['DESCRIPTION']}</p>
+          <p><strong>Source:</strong> ${item['SOURCE']}</p>
+          <p><a href="${item['LINK']}" target="_blank" style="color: #32673f">More Info</a></p>
+        `;
+        resultsDiv.appendChild(resultItem);
+      });
+    } else {
+      resultsDiv.innerHTML = '<p style="color: #32673f">No indicators found for the selected criteria.</p>';
+    }
+  });
+});
+</script>
