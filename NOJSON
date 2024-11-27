@@ -1,0 +1,20 @@
+// ALTERNATIVA A HACER UN FECHT AL DATA DE JSON
+
+<script>
+const data = {
+  "Indicators_available": [
+    {
+      "CODE": "AV_1_1",
+      "ID": "ACCESCOOKINGFUEL",
+      "NAME": "Access to clean fuels and technologies for cooking, total",
+      "DESCRIPTION": "Proportion of total population primarily using clean cooking fuels and technologies for cooking.",
+      "UNIT": "% of population ",
+      "SOURCE": "World Bank",
+      "LINK": "https://data.worldbank.org/indicator/EG.CFT.ACCS.ZS",
+      "MAIN DIMENSION": "Energy",
+      "CATEGORY": "Energy consumption"
+    },
+    // Agrega aquí el resto de los indicadores
+  ]
+};
+</script>
