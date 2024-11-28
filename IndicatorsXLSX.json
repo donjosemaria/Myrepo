@@ -1,5 +1,3 @@
-{
-"Indicators_available":[
  {
   "CODE": "AV_1_1",
   "ID": "ACCESCOOKINGFUEL",
@@ -3047,5 +3045,3 @@
   "MAIN DIMENSION": "Transport",
   "CATEGORY": "Vehicles"
  }
-]
-}
