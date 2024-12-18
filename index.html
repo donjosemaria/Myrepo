@@ -5,12 +5,85 @@
 
     <title>Título de la página</title>
     <!-- Otros metadatos y enlaces van aquí -->
-</head>
+    
+<style type="text/css">
+    
+:root {
+  --verde-palido: #EEF4E7;
+  --blanco-puro: #FFFFFF;
+  --verde-oscuro: #004B4D;
+  --verde-brillante: #60AE56;
+  --verde-lima: #CFE67A;
+  --gris-azulado: #A1BDBD;
+}
+
+body {
+  background-color: var(--verde-palido);
+  color: var(--verde-oscuro);
+  font-family: Arial, sans-serif;
+}
+
+button {
+  background-color: var(--verde-brillante);
+  color: var(--blanco-puro);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--verde-lima);
+}
+
+header {
+  background: linear-gradient(90deg, var(--verde-brillante), var(--verde-lima));
+  padding: 20px;
+  text-align: center;
+  color: var(--blanco-puro);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+  border: 2px solid var(--gris-azulado);
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+}
+
+input[type="text"]:focus {
+  border-color: var(--verde-brillante);
+  outline: none;
+}
+
+.search-button {
+  background-color: var(--verde-oscuro);
+  color: var(--blanco-puro);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: var(--verde-lima);
+}
+
+</style>
 
 </head>
+    
 <body>
 
+
 <div id="indicator-search" style="font-family: 'Outfit', sans-serif; padding: 20px; max-width: 800px; margin: auto;">
+  
+Here you can find indicators that help to analyse and understand Just Transition processes, its context and effects. The indicators were selected from a variety of reliable data repositories. 
+
+The indicators are classified by dimensions, which contain diverse categories of information.
+  
+Select a  dimension to filter out the results. If needed, select also a specific category to obtain a reduced and more relevant list of results. 
+  
   <h2 style="color: #32673f;">Find Indicators</h2>
   <div style="margin-bottom: 15px;">
     <label for="main-dimension" style="font-weight: bold; color: #32673f;">Main Dimension:</label>
@@ -3150,7 +3223,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h3 style="color: #32673f;">${item['NAME']}</h3>
           <p>${item['DESCRIPTION']}</p>
           <p><strong>Source:</strong> ${item['SOURCE']}</p>
-          <p><a href="${item['LINK']}" target="_blank" style="color: #32673f;">More Info</a></p>
+          <p><a href="${item['LINK']}" target="_blank" style="color: #32673f;">Link to data</a></p>
         `;
         resultsDiv.appendChild(resultItem);
       });
@@ -3160,6 +3233,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+
 
 </body>
 </html>
