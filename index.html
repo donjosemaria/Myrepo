@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
 
-    <title>Título de la página</title>
+    <title>Just Transition Indicators Database</title>
     <!-- Otros metadatos y enlaces van aquí -->
     
 <style type="text/css">
@@ -40,14 +41,6 @@ button:hover {
   font-family: 'Outfit', sans-serif;
 }
 
-header {
-  background: linear-gradient(90deg, var(--verde-brillante), var(--verde-lima));
-  padding: 20px;
-  text-align: center;
-  color: var(--blanco-puro);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 input[type="text"] {
   border: 2px solid var(--gris-azulado);
   border-radius: 5px;
@@ -73,6 +66,45 @@ input[type="text"]:focus {
   background-color: var(--verde-lima);
 }
 
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header .logo {
+    max-width: 300px; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto;
+    
+}
+
+.additional-image {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.additional-image img {
+    max-width: 20%;
+    height: auto;
+     
+}
+
+select {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px; /* Ajusta el tamaño de la fuente si lo necesitas */
+    color: var(--verde-oscuro); /* Mantén consistencia con el color del texto */
+    padding: 8px;
+    border: 2px solid var(--gris-azulado);
+    border-radius: 5px;
+    background-color: var(--blanco-puro);
+}
+
+option {
+    font-family: 'Outfit', sans-serif;
+    color: var(--verde-oscuro);
+    background-color: var(--blanco-puro);
+  
     
 </style>
 
@@ -80,8 +112,21 @@ input[type="text"]:focus {
     
 <body>
 
+  <header>
+     
+        <img src="https://greenpaths.info/wp-content/uploads/2024/12/GP-Logo-Colour-WhiteBG-Horizontal_1_-removebg-preview.png" alt="Logo" class="logo">
+</header>  
+<main>
+    <!-- Contenido de la página -->
+    <div class="additional-image">
+        <img src="https://greenpaths.info/wp-content/uploads/2024/06/thehub-home.png" alt="Additional Image">
+    </div>
+</main>
 
-<div id="indicator-search" style="font-family: 'Outfit', sans-serif; padding: 20px; max-width: 800px; margin: auto;">
+
+<div id="indicator-search" style="font-family: 'Outfit', sans-serif; padding: 20px; max-width: 500px; margin: auto;">
+  
+ <h2 style="color: #32673f;">Just Transition Indicators Database</h2>
   
 Here you can find indicators that help to analyse and understand Just Transition processes, its context and effects. The indicators were selected from a variety of reliable data repositories. 
 
