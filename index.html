@@ -26,9 +26,9 @@ body {
   font-family: 'Outfit', sans-serif;
 }
 
-button {
-  background-color: var(--verde-brillante);
-  color: var(--blanco-puro);
+#search-button {
+  background-color: var(--verde-oscuro);
+  color: var(--verde-lima);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -36,9 +36,10 @@ button {
   font-family: 'Outfit', sans-serif;
 }
 
-button:hover {
-  background-color: var(--verde-lima);
-  font-family: 'Outfit', sans-serif;
+#search-button:hover {
+background-color: var(--verde-brillante);
+  color: var(--blanco-puro);
+  
 }
 
 input[type="text"] {
@@ -63,7 +64,10 @@ input[type="text"]:focus {
 }
 
 .search-button:hover {
-  background-color: var(--verde-lima);
+  background-color: var(--verde-oscuro);
+  color: var(--verde-lima);
+  
+  
 }
 
 header {
@@ -81,11 +85,12 @@ header .logo {
 .additional-image {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    align-items: center; 
+    margin: 40px 0;
 }
 
 .additional-image img {
-    max-width: 20%;
+    max-width: 25%;
     height: auto;
      
 }
@@ -104,7 +109,19 @@ option {
     font-family: 'Outfit', sans-serif;
     color: var(--verde-oscuro);
     background-color: var(--blanco-puro);
+
+}
   
+  a {
+  color: #60ae56; /* Color por defecto */
+  text-decoration: none; /* Evita subrayado */
+}
+
+/* Estilo para cuando el ratón pasa sobre el enlace */
+    
+a:hover {
+  color: var(--verde-oscuro); /* O cualquier otro color que prefieras */
+  text-decoration: underline; /* Opcional: subrayar al pasar el ratón */
     
 </style>
 
@@ -113,18 +130,18 @@ option {
 <body>
 
   <header>
-     
+    
         <img src="https://greenpaths.info/wp-content/uploads/2024/12/GP-Logo-Colour-WhiteBG-Horizontal_1_-removebg-preview.png" alt="Logo" class="logo">
 </header>  
 <main>
     <!-- Contenido de la página -->
     <div class="additional-image">
-        <img src="https://greenpaths.info/wp-content/uploads/2024/06/thehub-home.png" alt="Additional Image">
+        <img src="https://greenpaths.info/wp-content/uploads/2024/06/thehub-home.png" alt="Additional Image"; align=center>
     </div>
 </main>
 
 
-<div id="indicator-search" style="font-family: 'Outfit', sans-serif; padding: 20px; max-width: 500px; margin: auto;">
+<div id="indicator-search" style="font-family: 'Outfit', sans-serif; padding: 20px; width: 70%; margin: auto;">
   
  <h2 style="color: #32673f;">Just Transition Indicators Database</h2>
   
@@ -143,9 +160,9 @@ Here you can find indicators that help to analyse and understand Just Transition
       <option value="">Select a Category</option>
     </select>
   </div>
-  <button id="search-button" style="background-color: #32673f; color: white; "font-family: 'Outfit', sans-serif; padding: 10px 20px; border: none; cursor: pointer;">Search Indicators</button>
+  <button id="search-button">Search Indicators</button>
   <div id="results" style="margin-top: 20px;"></div>
-</div>
+  </div>
 
 <script>
   const data = {
@@ -3270,7 +3287,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h3 style="color: #32673f;">${item['NAME']}</h3>
           <p>${item['DESCRIPTION']}</p>
           <p><strong>Source:</strong> ${item['SOURCE']}</p>
-          <p><a href="${item['LINK']}" target="_blank" style="color: #32673f;">Link to data</a></p>
+          <p><a href="${item['LINK']}" target="_blank">Link to data</a></p>
         `;
         resultsDiv.appendChild(resultItem);
       });
