@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mapa interactivo – Tarjetón fijo y contenido rico</title>
+<style>
+  :root{
+    --card-w: 320px;
+    --card-radius: 12px;
+    --card-shadow: 0 10px 30px rgba(0,0,0,.22);
+    --card-border: 1px solid rgba(0,0,0,.1);
+    --brand: #186049; /* verde discreto */
+  }
+  body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  h1{ margin: 0 0 16px; font-size: 24px; }
+
+  /* Contenedor del mapa */
+  .map-wrapper{ position: relative; display: inline-block; max-width: 100%; }
+  .map-wrapper img{ display: block; max-width: 100%; height: auto; }
+
+  /* Tarjetón fijo: fuera del mapa, anclado a la ventana */
+  #hover-card{
+    position: fixed; right: 16px; bottom: 16px; z-index: 9999;
+    width: var(--card-w); max-width: calc(100vw - 32px);
+    background: #fff; border-radius: var(--card-radius);
+    border: var(--card-border); box-shadow: var(--card-shadow);
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .14s ease-out, transform .14s ease-out;
+    pointer-events: auto; /* permite clics dentro del card */
+  }
+  #hover-card.hidden{ opacity: 0; transform: translateY(6px); }
+  #hover-card.visible{ opacity: 1; transform: translateY(0); }
+
+  .card{
+    display: grid; grid-template-rows: 180px auto; overflow: clip;
+    border-radius: var(--card-radius);
+  }
+  .card-img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-body{ padding: 12px 14px 14px; }
+  .card-title{ margin: 0 0 6px; font-size: 16px; font-weight: 700; }
+  .card-text{ margin: 0 0 12px; font-size: 14px; color: #333; }
+  .card-actions{ display: flex; gap: 8px; }
+  .btn{
+    display: inline-block; padding: 8px 12px; border-radius: 8px;
+    text-decoration: none; font-weight: 600; font-size: 14px;
+  }
+  .btn-primary{ background: var(--brand); color: #fff; }
+  .btn-secondary{ background: #f0f2f4; color: #111; }
+
+  @media (max-width: 480px){
+    :root{ --card-w: 280px; }
+    .card{ grid-template-rows: 150px auto; }
+  }
+</style>
+</head>
+<body>
+<h1>Mapa interactivo – Tarjetón fijo, contenido rico y mapa responsive</h1>
+
+<div class="map-wrapper">
+  <img src="https://greenpaths.info/wp-content/uploads/2026/01/case-study-map.jpg"
+       usemap="#image-map" alt="Mapa de estudios de caso" id="base-image" />
+
+  <map name="image-map">
+    <!-- Coordenadas RECT: left,top,right,bottom (corregidas) -->
+    <area target="_blank" alt="Case study #3"
+          aria-label="Case study #3: El Bierzo-Laciana"
+          href="https://greenpaths.info/"
+          coords="476,263,501,286" shape="rect"
+          data-title="Case study #3: El Bierzo-Laciana"
+          data-desc="Exploración del caso El Bierzo-Laciana en el contexto de la transición justa."
+          data-img="https://greenpaths.info/wp-content/uploads/2025/07/Image.jpg"
+          data-url="https://greenpaths.info/">
+  </map>
+</div>
+
+<!-- Tarjetón fijo -->
+<div id="hover-card" class="hidden" aria-hidden="true"></div>
+
+<!-- Librería para hacer el image-map responsive -->
+<script src="https://unpkg.com/image-map-resizer/dist/imageMapResizer.min.js"></script>
+<script>
+(function(){
+  // Inicializa el mapa responsive cuando todo está cargado
+  window.addEventListener('load', function(){
+    if (typeof imageMapResize === 'function') {
+      imageMapResize();
+    }
+  });
+
+  const hoverCard = document.getElementById('hover-card');
+  const areas = document.querySelectorAll('area[data-title]');
+  let hideTimer = null;
+
+  function buildCardHTML({img, title, desc, url}){
+    // Construye contenido rico del tarjetón
+    const safeTitle = title || '';
+    const safeDesc  = desc  || '';
+    const safeImg   = img   || '';
+    const safeUrl   = url   || '#';
+    return `\
+      <article class="card" role="dialog" aria-label="${safeTitle}">\
+        <img class="card-img" src="${safeImg}" alt="" loading="lazy">\
+        <div class="card-body">\
+          <h3 class="card-title">${safeTitle}</h3>\
+          <p class="card-text">${safeDesc}</p>\
+          <div class="card-actions">\
+            <a class="btn btn-primary" href="${safeUrl}" target="_blank" rel="noopener">Abrir caso</a>\
+            <button class="btn btn-secondary" type="button" aria-label="Cerrar" onclick="(function(el){el.classList.add('hidden');el.classList.remove('visible');el.setAttribute('aria-hidden','true');})(document.getElementById('hover-card'))">Cerrar</button>\
+          </div>\
+        </div>\
+      </article>`;
+  }
+
+  function showCard(data){
+    clearTimeout(hideTimer);
+    hoverCard.innerHTML = buildCardHTML(data);
+    hoverCard.classList.remove('hidden');
+    hoverCard.classList.add('visible');
+    hoverCard.setAttribute('aria-hidden','false');
+  }
+
+  function scheduleHide(){
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideCard, 120); // pequeño delay para permitir entrar al card
+  }
+
+  function hideCard(){
+    hoverCard.classList.add('hidden');
+    hoverCard.classList.remove('visible');
+    hoverCard.setAttribute('aria-hidden','true');
+  }
+
+  areas.forEach(area => {
+    const payload = {
+      title: area.getAttribute('data-title'),
+      desc:  area.getAttribute('data-desc'),
+      img:   area.getAttribute('data-img'),
+      url:   area.getAttribute('data-url') || area.getAttribute('href')
+    };
+
+    area.addEventListener('mouseover', () => showCard(payload));
+    area.addEventListener('mouseout',  scheduleHide);
+    area.addEventListener('focus',     () => showCard(payload));
+    area.addEventListener('blur',      hideCard);
+  });
+
+  // Si el usuario entra con el ratón al propio card, no lo ocultes
+  hoverCard.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+  hoverCard.addEventListener('mouseleave', hideCard);
+})();
+</script>
+
+<noscript>
+  <p><em>Este mapa interactivo requiere JavaScript para mostrar el tarjetón y escalar las áreas de clic.</em></p>
+</noscript>
+</body>
+</html>
