@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Studies Map | GreenPaths</title>
+
+<!-- Google Fonts - Outfit -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Colores basados en la identidad de GreenPaths */
+  --green-primary: #6fa042;
+  --green-dark: #4a7028;
+  --green-light: #8bc34a;
+  --accent-blue: #2196F3;
+  --text-dark: #2c3e50;
+  --text-light: #6c757d;
+  --bg-light: #f8f9fa;
+  --shadow-soft: 0 2px 12px rgba(0,0,0,.08);
+  --shadow-card: 0 8px 32px rgba(0,0,0,.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  background: white;
+  padding: 20px 0;
+  box-shadow: var(--shadow-soft);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+}
+
+.header-title {
+  flex: 1;
+  font-size: 18px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+/* Main container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.intro-text {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.intro-text h1 {
+  font-size: 32px;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.intro-text p {
+  font-size: 16px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.map-section {
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+  padding: 20px;
+}
+
+.map-wrapper img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Hover Card */
+#hover-card {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 360px;
+  max-width: calc(100vw - 48px);
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+  pointer-events: none;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+#hover-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, var(--green-light), var(--green-primary));
+  overflow: hidden;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: white;
+  color: var(--green-primary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.card-action {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--green-primary);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: gap .2s;
+}
+
+.card-action:hover {
+  gap: 14px;
+}
+
+.card-action svg {
+  width: 18px;
+  height: 18px;
+  transition: transform .2s;
+}
+
+.card-action:hover svg {
+  transform: translateX(2px);
+}
+
+/* Legend */
+.legend {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+.legend h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background .2s;
+}
+
+.legend-item:hover {
+  background: var(--bg-light);
+}
+
+.legend-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--green-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.legend-text {
+  font-size: 14px;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 24px 16px;
+  }
+  
+  .intro-text h1 {
+    font-size: 24px;
+  }
+  
+  .intro-text p {
+    font-size: 15px;
+  }
+  
+  .map-wrapper {
+    padding: 12px;
+  }
+  
+  #hover-card {
+    width: 320px;
+    right: 16px;
+    bottom: 16px;
+  }
+  
+  .card-image-wrapper {
+    height: 160px;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .card-title {
+    font-size: 15px;
+  }
+  
+  .legend {
+    padding: 20px;
+  }
+  
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .logo img {
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  #hover-card {
+    width: calc(100vw - 32px);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-content">
+    <a href="https://greenpaths.info" class="logo">
+      <img src="https://greenpaths.info/wp-content/uploads/2024/05/logo_GP.svg" alt="GreenPaths">
+    </a>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+  
+  <!-- Intro -->
+  <div class="intro-text">
+    <h1>Interactive Case Studies Map</h1>
+    <p>Hover over the numbered points to explore our research case studies from around the world.</p>
+    <p style="font-size: 14px; color: var(--text-light);">Click on any case to learn more about green transition initiatives.</p>
+  </div>
+
+  <!-- Map -->
+  <div class="map-section">
+    <div class="map-wrapper">
+      <img src="https://greenpaths.info/wp-content/uploads/2026/02/case-study-map-v4.jpg" 
+           usemap="#image-map" 
+           alt="Case Studies World Map"
+           id="map-image">
+    </div>
+  </div>
+
+  <map name="image-map">
+    <area target="_blank" alt="Lithium Mining in Barroso, Portugal" href="https://greenpaths.info/cs01" coords="1166,718,21" shape="circle" data-num="1" data-title="Case study 1: Lithium Mining and the 'Green Sacrificial Logics' of the Energy Transition in Barroso, Portugal." data-img="https://greenpaths.info/wp-content/uploads/2025/07/D3.2.-CES-Portugal-Image-e1769005137542.jpg">
+    <area target="_blank" alt="Forest conservation in Romania" href="https://greenpaths.info/cs02" coords="1549,629,19" shape="circle" data-num="2" data-title="Case study 2: Europe's Yellowstone? An analysis of the social impacts of forest conservation in Romania" data-img="https://greenpaths.info/wp-content/uploads/2025/07/D3.2.-CES-Romania-Image.jpg">
+    <area target="_blank" alt="Coal mine closures in Spain" href="https://greenpaths.info/cs03" coords="1192,669,21" shape="circle" data-num="3" data-title="Case study 3: Just Transition Agreements – Coal mine and thermal power plant closures in the region of El Bierzo-Laciana (Spain)" data-img="https://greenpaths.info/wp-content/uploads/2025/07/OES.jpg">
+    <area target="_blank" alt="Common Agricultural Policy impacts" href="https://greenpaths.info/cs04" coords="1371,702,14" shape="circle" data-num="4" data-title="Case study 4: Assessing the Impacts of the Common Agricultural Policy (CAP) in Land Use in Slovenia, Croatia and Serbia" data-img="https://greenpaths.info/wp-content/uploads/2025/07/Poly.jpg">
+    <area target="_blank" alt="Green Industrial Policy in Latin America" href="https://greenpaths.info/cs05" coords="909,1095,32" shape="circle" data-num="5" data-title="Case study 5: Green Industrial Policy and Ecological Transformation in Latin America: A Transformative Perspective" data-img="https://greenpaths.info/wp-content/uploads/2025/07/TNI.jpg">
+    <area target="_blank" alt="Green Industrial Policy in Southeast Asia" href="https://greenpaths.info/cs06" coords="2066,1131,22" shape="circle" data-num="6" data-title="Case study 6: Green Industrial Policy in Southeast Asia: Developmental States, Export-Oriented Manufacturing, and the Paradox of 'Green' Transitions" data-img="https://greenpaths.info/wp-content/uploads/2025/07/TNI.jpg">
+    <area target="_blank" alt="Green Industrial Policy in Southern Africa" href="https://greenpaths.info/cs07" coords="1314,1242,28" shape="circle" data-num="7" data-title="Case study 7: The Paradoxes of Green Industrial Policy in Southern Africa" data-img="https://greenpaths.info/wp-content/uploads/2025/07/TNI.jpg">
+    <area target="_blank" alt="Green Industrial Policy in North Africa" href="https://greenpaths.info/cs08" coords="1386,910,19" shape="circle" data-num="8" data-title="Case study 8: Green Industrial Policy in North Africa: Between Energy Sovereignty, Authoritarian Governance and Neocolonial Extraction" data-img="https://greenpaths.info/wp-content/uploads/2025/07/TNI.jpg">
+    <area target="_blank" alt="Climate finance in the EU" href="https://greenpaths.info/cs09" coords="1339,644,26" shape="circle" data-num="9" data-title="Case study 9: Climate finance and its distribution in the EU" data-img="https://greenpaths.info/wp-content/uploads/2025/09/generated_image.jpg">
+    <area target="_blank" alt="Green transition policy effects" href="https://greenpaths.info/cs10" coords="1314,597,18" shape="circle" data-num="10" data-title="Case study 10: Effects of green transition policy interventions on environmental sustainability and social wellbeing in EU countries and in 24 selected countries in the Global South" data-img="https://greenpaths.info/wp-content/uploads/2025/07/SIEGEN.jpg">
+    <area target="_blank" alt="European Hydrogen Economy" href="https://greenpaths.info/cs11" coords="1102,861,26" shape="circle" data-num="11" data-title="Case study 11: The European Hydrogen Economy: A Carrier for the Green and Just Transition?" data-img="https://greenpaths.info/wp-content/uploads/2025/07/UVA.jpg">
+    <area target="_blank" alt="European Hydrogen Economy" href="https://greenpaths.info/cs11" coords="1329,513,19" shape="circle" data-num="11" data-title="Case study 11: The European Hydrogen Economy: A Carrier for the Green and Just Transition?" data-img="https://greenpaths.info/wp-content/uploads/2025/07/UVA.jpg">
+    <area target="_blank" alt="Mining Lithium in Serbia" href="https://greenpaths.info/cs12" coords="1442,773,23" shape="circle" data-num="12" data-title="Case study 12: Mining Lithium in Serbia" data-img="https://greenpaths.info/wp-content/uploads/2025/07/ZAD.jpg">
+    <area target="_blank" alt="Tourism transformation in Croatia" href="https://greenpaths.info/cs13" coords="1420,738,17" shape="circle" data-num="13" data-title="Case study 13: Green transformation of tourism industry – Case of Croatian urban tourist destinations" data-img="https://greenpaths.info/wp-content/uploads/2025/07/IPE.jpg">
+    <area target="_blank" alt="Energy poverty" href="https://greenpaths.info/cs14" coords="1338,704,13" shape="circle" data-num="14" data-title="Case study 14: Energy poverty in Central and South-Eastern Europe" data-img="https://greenpaths.info/wp-content/uploads/2025/07/png.jpg">
+    <area target="_blank" alt="Public food procurement" href="https://greenpaths.info/cs15" coords="1237,663,20" shape="circle" data-num="15" data-title="Case study 15: Public food procurement as a lever to foster the just and green transition – Dordogne case study" data-img="https://greenpaths.info/wp-content/uploads/2025/07/ris.jpg">
+  </map>
+
+  <!-- Legend (opcional) -->
+  <div class="legend">
+    <h3>Case Studies Overview</h3>
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-icon">1-4</div>
+        <div class="legend-text">European case studies on mining, forestry, coal, and agriculture</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon">5-8</div>
+        <div class="legend-text">Global South industrial policy studies</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon">9-11</div>
+        <div class="legend-text">EU-wide policies on climate finance and hydrogen</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon">12-15</div>
+        <div class="legend-text">Regional studies on mining, tourism, energy, and food</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Hover Card -->
+<div id="hover-card"></div>
+
+<!-- Librería responsive -->
+<script src="https://unpkg.com/image-map-resizer@1.0.10/js/imageMapResizer.min.js"></script>
+
+<script>
+// Inicializar mapa responsive
+window.addEventListener('load', function() {
+  if (typeof imageMapResize === 'function') {
+    imageMapResize();
+  }
+});
+
+// Hover card functionality
+const card = document.getElementById("hover-card");
+const areas = document.querySelectorAll("area[data-title]");
+let hideTimeout;
+
+areas.forEach(area => {
+  area.addEventListener("mouseenter", () => {
+    clearTimeout(hideTimeout);
+    
+    const num = area.dataset.num;
+    const title = area.dataset.title;
+    const img = area.dataset.img;
+    const url = area.getAttribute('href');
+
+    card.innerHTML = `
+      <div class="card-image-wrapper">
+        <img src="${img}" alt="">
+        <div class="card-badge">Case Study ${num}</div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">${title}</h3>
+        <a href="${url}" target="_blank" class="card-action">
+          Read full case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    `;
+
+    card.classList.add("visible");
+  });
+
+  area.addEventListener("mouseleave", () => {
+    hideTimeout = setTimeout(() => {
+      card.classList.remove("visible");
+    }, 150);
+  });
+});
+
+// Mantener visible si el mouse está sobre el card
+card.addEventListener("mouseenter", () => {
+  clearTimeout(hideTimeout);
+});
+
+card.addEventListener("mouseleave", () => {
+  card.classList.remove("visible");
+});
+</script>
+
+</body>
+</html>
